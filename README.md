@@ -81,20 +81,13 @@ Model performance is evaluated using accuracy, precision, recall, and a confusio
 
 ## 📈 Results
 
-| Model               | Accuracy |
-|---------------------|----------|
-| Logistic Regression | ~97%     |
-| KNN                  | ~96%     |
-| SVM                  | ~97%     |
-| Random Forest         | ~96%     |
+| Model                | Accuracy |
+|--------------------- |----------|
+| Logistic Regression  |   NA     |
+| KNN                  |   NA     |
+| SVM                  |   NA     |
+| Random Forest        |   NA     |
 
 *(Update this table with your actual results.)*
 
-## 📄 License
 
-This project is licensed under the MIT License.
-
-## 🙌 Acknowledgments
-
-- Iris dataset originally introduced by Ronald A. Fisher (1936)
-- UCI Machine Learning Repository
