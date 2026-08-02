@@ -1,4 +1,5 @@
-# 🌸 Iris Flower Classification
+# Water Potability Prediction
+
 
 A machine learning project that classifies Iris flowers into one of three species — **Setosa**, **Versicolor**, and **Virginica** — based on their sepal and petal measurements.
 
