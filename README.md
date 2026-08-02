@@ -1,94 +1,220 @@
-# Water Potability Prediction
+# 💧 Water Potability Prediction using Machine Learning
 
+Predicting whether water is safe for drinking is an important public health challenge. In this project, I built an end-to-end machine learning pipeline to classify water samples as **potable** or **non-potable** using physicochemical water quality measurements.
 
-A machine learning project that classifies Iris flowers into one of three species — **Setosa**, **Versicolor**, and **Virginica** — based on their sepal and petal measurements.
+The project covers the complete machine learning workflow—from data preprocessing and exploratory data analysis to model building, hyperparameter tuning, and evaluation.
 
-## 📋 Overview
+---
 
-This project uses the classic [Iris dataset](https://archive.ics.uci.edu/dataset/53/iris) to build and evaluate a supervised classification model. It's a great beginner-friendly project for learning the end-to-end ML workflow: data loading, exploration, preprocessing, model training, and evaluation.
+# 📌 Project Overview
 
-## 📊 Dataset
+The objective of this project is to predict the **potability of water** based on nine water quality parameters.
 
-The Iris dataset contains 150 samples with the following features:
+During the project, multiple preprocessing techniques and machine learning models were explored to identify the most suitable approach for this dataset.
 
-| Feature        | Description                  |
-|-----------------|-------------------------------|
-| Sepal Length    | Length of the sepal (cm)     |
-| Sepal Width     | Width of the sepal (cm)      |
-| Petal Length    | Length of the petal (cm)     |
-| Petal Width     | Width of the petal (cm)      |
-| Species (target)| Setosa, Versicolor, Virginica |
+The workflow includes:
 
-## 🛠️ Tech Stack
+- Data preprocessing
+- Missing value treatment using KNN Imputation
+- Exploratory Data Analysis (EDA)
+- Correlation Analysis
+- Logistic Regression (Baseline Model)
+- Random Forest Classification
+- Hyperparameter Tuning using GridSearchCV
+- Model Evaluation and Comparison
 
-- Python 3.x
-- pandas / numpy — data handling
-- scikit-learn — model training & evaluation
-- matplotlib / seaborn — data visualization
-- Jupyter Notebook (optional, for exploration)
+---
 
-## 📁 Project Structure
+# 📊 Dataset
+
+The dataset contains **3,276** water samples with **9 numerical features** describing various physicochemical properties of water.
+
+### Target Variable
+
+| Value | Meaning |
+|--------|---------|
+| 0 | Not Potable |
+| 1 | Potable |
+
+### Features
+
+- pH
+- Hardness
+- Solids
+- Chloramines
+- Sulfate
+- Conductivity
+- Organic Carbon
+- Trihalomethanes
+- Turbidity
+
+---
+
+# 🧹 Data Preprocessing
+
+The dataset contained missing values in:
+
+| Feature | Missing Values |
+|----------|---------------:|
+| pH | 491 |
+| Sulfate | 781 |
+| Trihalomethanes | 162 |
+
+Different imputation techniques were explored.
+
+- Mean Imputation
+- Median Imputation
+- **KNN Imputation (Selected)**
+
+KNN Imputation was chosen because it preserved the original feature distributions more effectively than mean or median imputation.
+
+---
+
+# 📊 Exploratory Data Analysis
+
+Several visualizations were performed to better understand the dataset.
+
+The analysis included:
+
+- Distribution plots
+- Boxplots
+- Feature vs Target analysis
+- Correlation Heatmap
+
+### Key Findings
+
+- The dataset is moderately imbalanced (61% non-potable, 39% potable).
+- Individual features showed significant overlap between potable and non-potable water samples.
+- Correlation analysis revealed weak linear relationships among the features.
+- No single feature alone was sufficient for classification.
+
+These findings motivated the use of a tree-based ensemble model capable of learning non-linear relationships.
+
+---
+
+# 🤖 Machine Learning Models
+
+## Logistic Regression
+
+Logistic Regression was used as the baseline classifier.
+
+### Performance
+
+| Metric | Score |
+|---------|-------:|
+| Accuracy | 0.6098 |
+| Precision | 0.0000 |
+| Recall | 0.0000 |
+| F1 Score | 0.0000 |
+| ROC-AUC | 0.5482 |
+
+The model predicted only the majority class, demonstrating that the dataset is not linearly separable.
+
+---
+
+## Random Forest
+
+A Random Forest classifier was then trained to capture complex, non-linear interactions among the features.
+
+### Baseline Performance
+
+| Metric | Score |
+|---------|-------:|
+| Accuracy | 0.6585 |
+| Precision | 0.6356 |
+| Recall | 0.2930 |
+| F1 Score | 0.4011 |
+| ROC-AUC | 0.6469 |
+
+---
+
+# ⚙️ Hyperparameter Tuning
+
+The Random Forest model was optimized using **GridSearchCV** with **5-fold cross-validation**.
+
+### Best Parameters
+
+```python
+RandomForestClassifier(
+    n_estimators=200,
+    max_depth=None,
+    min_samples_split=2,
+    min_samples_leaf=1,
+    random_state=42
+)
+```
+
+### Tuned Model Performance
+
+| Metric | Score |
+|---------|-------:|
+| Accuracy | **0.6585** |
+| Precision | **0.6270** |
+| Recall | **0.3086** |
+| F1 Score | **0.4136** |
+| ROC-AUC | **0.6470** |
+
+Hyperparameter tuning produced a modest improvement in recall and F1-score while maintaining the same overall accuracy.
+
+---
+
+# 📈 Model Comparison
+
+| Model | Accuracy | Precision | Recall | F1 Score | ROC-AUC |
+|--------|---------:|----------:|-------:|---------:|--------:|
+| Logistic Regression | 0.6098 | 0.0000 | 0.0000 | 0.0000 | 0.5482 |
+| Random Forest | 0.6585 | 0.6356 | 0.2930 | 0.4011 | 0.6469 |
+| Tuned Random Forest | **0.6585** | **0.6270** | **0.3086** | **0.4136** | **0.6470** |
+
+---
+
+# 🛠️ Technologies Used
+
+- Python
+- Pandas
+- NumPy
+- Matplotlib
+- Seaborn
+- Scikit-learn
+- Jupyter Notebook
+
+---
+
+# 📁 Project Structure
 
 ```
-iris-flower-classification/
+water_potability_prediction/
 ├── data/
-│   └── iris.csv
+│   └── water_potability.csv
+│
 ├── notebooks/
-│   └── exploration.ipynb
-├── src/
-│   ├── train.py
-│   ├── predict.py
-│   └── utils.py
-├── models/
-│   └── model.pkl
+│   └── machine-learning-final-project-submission.ipynb
+│
+├── README.md
 ├── requirements.txt
-└── README.md
+└── .gitignore
 ```
 
-## 🚀 Getting Started
+---
 
-### 1. Clone the repository
-```bash
-git clone https://github.com/your-username/iris-flower-classification.git
-cd iris-flower-classification
-```
+# 🎯 Conclusion
 
-### 2. Install dependencies
-```bash
-pip install -r requirements.txt
-```
+This project demonstrates a complete machine learning workflow for solving a binary classification problem.
 
-### 3. Train the model
-```bash
-python src/train.py
-```
+While Logistic Regression struggled due to the weak linear relationships present in the dataset, Random Forest significantly improved predictive performance by learning non-linear interactions among water quality features. Hyperparameter tuning further improved the model's ability to identify potable water samples.
 
-### 4. Make predictions
-```bash
-python src/predict.py --sepal_length 5.1 --sepal_width 3.5 --petal_length 1.4 --petal_width 0.2
-```
+The final tuned Random Forest model achieved:
 
-## 🤖 Model
+- **Accuracy:** 65.85%
+- **F1 Score:** 0.4136
+- **ROC-AUC:** 0.6470
 
-The project experiments with several classification algorithms, including:
+making it the best-performing model explored in this project.
 
-- Logistic Regression
-- K-Nearest Neighbors (KNN)
-- Decision Tree
-- Support Vector Machine (SVM)
-- Random Forest
+---
 
-Model performance is evaluated using accuracy, precision, recall, and a confusion matrix.
+## 👨‍💻 Author
 
-## 📈 Results
+**Shubhram Priyadarshan**
 
-| Model                | Accuracy |
-|--------------------- |----------|
-| Logistic Regression  |   NA     |
-| KNN                  |   NA     |
-| SVM                  |   NA     |
-| Random Forest        |   NA     |
-
-*(Update this table with your actual results.)*
-
-
+Machine Learning | Data Analytics | Python
